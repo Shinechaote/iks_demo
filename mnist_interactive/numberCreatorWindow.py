@@ -1,46 +1,77 @@
-# import tensorflow as tf
+import tensorflow as tf
 import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.widgets import Button
+import tkinter as tk
+from tkinter import ttk
+
 
 
 class NumberCreatorWindow:
+
+    def __init__(self, root):
+        self.root = root
+        self.root.title("MNIST Drawing App")
+        
+        self.drawing = False
+        self.grid_data = np.zeros((28, 28), dtype=np.float32)
+        
+        self._create_widgets()
+        self._create_canvas()
     
-    def createWindow(self, rows=28, cols=28):
-        fig, ax = plt.subplots(figsize=(10, 10))
-        plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.1)
+    def _create_widgets(self):
+        self.main_frame = ttk.Frame(self.root, padding="10")
+        self.main_frame.grid(row=0, column=0, sticky=(tk.N, tk.S, tk.E, tk.W))
 
-        ax.set_axis_off()
+        self.clear_button = ttk.Button(self.main_frame, text="Clear", command=self.clear_canvas)
+        self.clear_button.grid(row=0, column=0, sticky=(tk.W, tk.E))
 
-        buttonHeight = 0.8/rows
-        buttonWidth = 0.8/cols
+        self.prediction_label = ttk.Label(self.main_frame, text="Prediction: ")
+        self.prediction_label.grid(row=0, column=2, padx=5, pady=5)
 
-        buttons = np.empty((rows, cols), dtype=object)
+    def _create_canvas(self):
+        self.canvas = tk.Canvas(self.root, width=280, height=280, bg="black")
+        self.canvas.grid(row=1, column=0, columnspan=3, padx=5, pady=5)
 
-        def buttonClick(event):
-            pos = event.inaxes.get_label()
-            i, j = map(int, pos.split(','))
-            print(f'Button {i}, {j} clicked')
+        self.canvas.bind('<Button-1>', self.start_drawing)
+        self.canvas.bind('<B1-Motion>', self.draw)
+        self.canvas.bind('<ButtonRelease-1>', self.stop_drawing)
+
+        # create grid lines
+        for i in range(28):
+            x = i * 10
+            self.canvas.create_line(x, 0, x, 280, fill="gray")
+            self.canvas.create_line(0, x, 280, x, fill="gray")
         
-        for i in range(rows):
-            for j in range(cols):
-                left = 0.1 + j * buttonWidth
-                bottom = 0.1 + (rows - 1 - i) * buttonHeight
-                
-                # Create axes for button
-                button_ax = plt.axes([left, bottom, buttonWidth, buttonHeight])
-                button_ax.set_label(f"{i},{j}")  # Store position in label
-                
-                # Create button
-                btn = Button(button_ax, '')
-                btn.on_clicked(buttonClick)
-                buttons[i, j] = btn
+    def start_drawing(self, event):
+        self.drawing = True
+        self.draw(event)
+    
+    def stop_drawing(self, event):
+        self.drawing = False
+    
+    def draw(self, event):
+        if self.drawing:
+            grid_x = event.x // 10
+            grid_y = event.y // 10
+
+            if 0 <= grid_x < 28 and 0 <= grid_y < 28:
+                x1 = grid_x * 10
+                y1 = grid_y * 10
+                x2 = x1 + 10
+                y2 = y1 + 10
+
+                self.canvas.create_rectangle(x1, y1, x2, y2, fill="white", outline="grey")
+                self.grid_data[grid_y, grid_x] = 1.0
         
-        plt.show()
-        return buttons
+    def clear_canvas(self):
+        self.canvas.delete("all")
+        self.grid_data = np.zeros((28, 28), dtype=np.float32)
 
-window = NumberCreatorWindow()
-window.createWindow()
+        for i in range(28):
+            x = i * 10
+            self.canvas.create_line(x, 0, x, 280, fill="gray")
+            self.canvas.create_line(0, x, 280, x, fill="gray")
 
+    def predict(self):
+        print("hi")
 
 
