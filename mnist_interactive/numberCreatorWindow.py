@@ -180,7 +180,7 @@ class NumberCreatorWindow:
 
     def predict(self):
         prediction, confidence = utils.predict(self.model, self.grid_data)
-        self.prediction_label.config(text=f"Prediction: {prediction} ({confidence:.2f})")
+        self.prediction_label.config(text=f"Prediction: {prediction} Confidence: {confidence:.2f}")
         self.root.update()
         self.root.after(200, self.predict)
 
