@@ -48,7 +48,7 @@ class NumberCreatorWindow:
 
 
         # create grid lines
-        for i in range(28):
+        for i in range(29):
             x = i * 10
             self.canvas.create_line(x, 0, x, 280, fill="gray")
             self.canvas.create_line(0, x, 280, x, fill="gray")
@@ -59,6 +59,7 @@ class NumberCreatorWindow:
     
     def stop_drawing(self, event):
         self.drawing = False
+        self.predict()
     
     def draw(self, event):
         if self.drawing:
@@ -155,6 +156,7 @@ class NumberCreatorWindow:
 
     def stop_removing(self, event):
         self.removing = False
+        self.predict()
 
     def remove(self, event): 
         if self.removing:
@@ -182,7 +184,6 @@ class NumberCreatorWindow:
         prediction, confidence = utils.predict(self.model, self.grid_data)
         self.prediction_label.config(text=f"Prediction: {prediction} Confidence: {confidence:.2f}")
         self.root.update()
-        self.root.after(200, self.predict)
 
 
 
