@@ -2,14 +2,17 @@ import tensorflow as tf
 import numpy as np
 import tkinter as tk
 from tkinter import ttk
+import utils as utils
 
 
 
 class NumberCreatorWindow:
 
-    def __init__(self, root, blur=0.01):
+    def __init__(self, root, model, blur=0.01):
         self.root = root
         self.root.title("MNIST Drawing App")
+
+        self.label = ttk.Label(self.root, text="Draw a number")
         
         self.drawing = False
         self.removing = False
@@ -18,6 +21,9 @@ class NumberCreatorWindow:
         
         self._create_widgets()
         self._create_canvas()
+
+        self.model = model
+        self.predict()
     
     def _create_widgets(self):
         self.main_frame = ttk.Frame(self.root, padding="10")
@@ -173,6 +179,10 @@ class NumberCreatorWindow:
             self.canvas.create_line(0, x, 280, x, fill="gray")
 
     def predict(self):
-        print("hi")
+        prediction, confidence = utils.predict(self.model, self.grid_data)
+        self.prediction_label.config(text=f"Prediction: {prediction} ({confidence:.2f})")
+        self.root.update()
+        self.root.after(200, self.predict)
+
 
 
