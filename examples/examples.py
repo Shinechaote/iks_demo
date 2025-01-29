@@ -1,7 +1,7 @@
-# pip install -i https://test.pypi.org/simple/ mnist-interactive==1.0.4
+# To install the package:
+# pip install -i https://test.pypi.org/simple/ mnist-interactive
 
 import mnist_interactive.numberCreatorWindow as mi
-import numpy as np
 import tensorflow as tf
 import tkinter as tk
 from tkinter import ttk
@@ -15,6 +15,6 @@ root = tk.Tk()
 
 
 # Initialize the interactive grid
-grid = mi.NumberCreatorWindow(root, blur=0.15, model=model)
+grid = mi.NumberCreatorWindow(root, blur=0.3, model=model)
 
 root.mainloop()
