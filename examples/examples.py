@@ -1,3 +1,5 @@
+# pip install -i https://test.pypi.org/simple/ mnist-interactive==1.0.4
+
 import mnist_interactive.numberCreatorWindow as mi
 import numpy as np
 import tensorflow as tf
