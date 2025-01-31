@@ -1,0 +1,18 @@
+[project]
+name = "mnist_interactive"
+version = "1.0.4"
+authors = [
+  { name="Luca Lowndes", email="Luca@Lowndes.net" },
+]
+description = "The MNIST Interactive Library is a Python tool for experimenting with the MNIST dataset and TensorFlow models. It features a 28x28 interactive grid where users can draw digits, submit them to a pre-trained model, and view predictions with confidence scores. Perfect for educational and experimental purposes."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = { file = "LICENSE" }
+
+[project.urls]
+Homepage = "https://github.com/LucaLow/MNIST-Interactive-Model-Analyzer"
+Issues = "https://github.com/LucaLow/MNIST-Interactive-Model-Analyzer/issues"
