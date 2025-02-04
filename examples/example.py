@@ -4,7 +4,7 @@ import tkinter as tk
 from tkinter import ttk
 
 # To install the package:
-# pip install -i https://test.pypi.org/simple/ mnist-interactive
+# pip install -i https://test.pypi.org/simple/mnist-interactive
 
 # Load your pre-trained MNIST model
 model = tf.keras.models.load_model('sampleModel.keras')
