@@ -1,6 +1,6 @@
 Metadata-Version: 2.2
 Name: mnist_interactive
-Version: 1.0.4
+Version: 1.0.5
 Summary: The MNIST Interactive Library is a Python tool for experimenting with the MNIST dataset and TensorFlow models. It features a 28x28 interactive grid where users can draw digits, submit them to a pre-trained model, and view predictions with confidence scores. Perfect for educational and experimental purposes.
 Home-page: https://github.com/LucaLow/MNIST-Interactive-Model-Analyzer
 Author: Luca Lowndes
@@ -16,92 +16,123 @@ Dynamic: author
 Dynamic: home-page
 Dynamic: requires-python
 
-# MNIST Interactive Library
+# MNIST Interactive Model Analyzer
 
-## Brief Description
-The MNIST Interactive Library is a Python tool for experimenting with the MNIST dataset and TensorFlow models. It features a 28x28 interactive grid where users can draw digits, submit them to a pre-trained model, and view predictions with confidence scores. Perfect for educational and experimental purposes.
+An interactive tool for experimenting with MNIST handwriting recognition models using a custom-built 28x28 drawing grid. This application allows users to draw digits and get real-time predictions from a trained MNIST model.
 
----
+## Features
 
-## Overview
-The MNIST Interactive Library is a Python-based tool designed for users working with the MNIST dataset and TensorFlow models. This library provides an interactive 28x28 grid where users can simulate drawing digits, submit their input to a pre-trained model, and instantly view the model's predictions along with its confidence scores.
-
-## Key Features
-
-### 1. **Interactive 28x28 Grid**
-- A fully interactive GUI built using `Tkinter`.
-- Users can toggle individual grid cells to simulate drawing digits.
-- Includes buttons to "Clear" the grid and "Submit" the drawn input to the model.
-
-### 2. **Model Integration**
-- Accepts any pre-trained TensorFlow/Keras model as input.
-- Converts the grid state into a 28x28 grayscale NumPy array suitable for MNIST model predictions.
-
-### 3. **Real-Time Predictions**
-- Displays the predicted digit based on the drawn input.
-- Provides the confidence level of the model's prediction.
-
-### 4. **User-Friendly Design**
-- Simple and intuitive interface suitable for beginners and experts alike.
-- Designed to facilitate experimentation and learning with neural networks.
+- Interactive 28x28 drawing grid that matches MNIST input dimensions
+- Real-time prediction updates as you draw
+- Blur effect to simulate natural handwriting
+- Clear canvas functionality
+- Grid overlay for precise pixel manipulation
+- Support for custom MNIST-compatible models
+- Allows for custom conversion and output functions to allow for increased compatability with different model types.
 
 ## Installation
+
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/mnist-interactive.git
-   cd mnist-interactive
-   ```
+```bash
+git clone https://github.com/LucaLow/MNIST-Interactive-Model-Analyzer.git
+cd MNIST-Interactive-Model-Analyzer
+```
+Or install through pip:
+```bash
+pip install -i https://test.pypi.org/simple/ mnist-interactive
+```
 
 2. Install the required dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-## Usage
-1. Import the library and load your pre-trained model:
-   ```python
-   from tensorflow.keras.models import load_model
-   from mnist_interactive.interactive_grid import InteractiveGrid
-
-   # Load your pre-trained MNIST model
-   model = load_model("path_to_your_model.h5")
-
-   # Initialize the interactive grid
-   grid = InteractiveGrid(model)
-   grid.run()
-   ```
-
-2. Interact with the grid:
-   - Toggle cells to simulate drawing a digit.
-   - Click "Submit" to see the model's prediction and confidence.
-   - Use the "Clear" button to reset the grid.
-
-## Example
-```python
-from tensorflow.keras.models import load_model
-from mnist_interactive.interactive_grid import InteractiveGrid
-
-# Load a model
-model = load_model("mnist_model.h5")
-
-# Start the grid interface
-grid = InteractiveGrid(model)
-grid.run()
+```bash
+pip install numpy
+pip install tensorflow
 ```
 
 ## Requirements
-- Python 3.8+
-- TensorFlow 2.0+
+
+- Python >= 3.8
+- TensorFlow >= 2.0
 - NumPy
-- Tkinter (included with most Python installations)
+- Tkinter (usually comes with Python)
+
+## Usage
+
+1. Basic usage with a pre-trained model:
+
+```python
+import mnist_interactive.numberCreatorWindow as mi
+import tensorflow as tf
+import tkinter as tk
+from tkinter import ttk
+
+
+# Load your pre-trained MNIST model
+model = tf.keras.models.load_model('sampleModel.keras')
+
+# create the tkinter window
+root = tk.Tk()
+
+
+# Initialize the interactive grid
+grid = mi.NumberCreatorWindow(root, model=model, blur=0.3)
+
+root.mainloop()
+```
+
+2. Customize the blur effect:
+
+```python
+app = NumberCreatorWindow(root, model=model, blur=0.15)  # Adjust blur intensity
+```
+
+## Controls
+
+- Left Click: Draw
+- Right Click: Erase
+- Clear Button: Reset the canvas
+- Real-time predictions displayed above the canvas
+
+## Project Structure
+
+- `numberCreatorWindow.py`: Main application window and drawing logic
+- `utils.py`: Utility functions for predictions and grid operations
+- `example.py`: Example implementation
+- `requirements.txt`: Required Python packages
+- `setup.py`: Package installation configuration
+
+## API Reference
+
+### NumberCreatorWindow
+
+```python
+NumberCreatorWindow(root, model, blur=0.1, conversion_function, output_function)
+```
+
+Parameters:
+- `root`: Tkinter root window
+- `model`: TensorFlow model for digit prediction
+- `blur`: Blur intensity for drawing (default: 0.1)
+- `conversion_function`: Function receiving a 28×28 NumPy array and returning data in the shape/format the model accepts
+- `output function`: Function receiving the model’s raw output (e.g. probability array) and returning a tuple of (prediction int, confidence float)
+
+### Methods
+
+- `clear_canvas()`: Clear the drawing grid
+- `predict()`: Get prediction for current drawing
 
 ## Contributing
-Contributions are welcome! Feel free to fork the repository and submit pull requests. If you encounter any issues or have suggestions, please open an issue on GitHub.
+
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
-This project is licensed under the MIT License. See the `LICENSE` file for more details.
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Author
+
+Luca Lowndes (Luca@Lowndes.net)
 
 ## Acknowledgments
-- **MNIST Dataset**: LeCun, Y., Bottou, L., Bengio, Y., and Haffner, P. Gradient-based learning applied to document recognition. Proceedings of the IEEE, 1998.
-- **TensorFlow**: An open-source machine learning framework by Google.
 
+- Built using TensorFlow and MNIST dataset
+- Inspired by the need for interactive MNIST model testing tools based upon the models you create
