@@ -1,7 +1,6 @@
 # MNIST Interactive Model Analyzer
 
 An interactive tool for experimenting with MNIST handwriting recognition models using a custom-built 28x28 drawing grid. This application allows users to draw digits and get real-time predictions from a trained MNIST model.
-Of note; currently all models will be fed numpy an array of shape (1, 784), with normalised greyscale values between [0, 1] inclusive, so will only work with basic models, more compatibility will be available soon.
 
 ## Features
 
@@ -11,6 +10,7 @@ Of note; currently all models will be fed numpy an array of shape (1, 784), with
 - Clear canvas functionality
 - Grid overlay for precise pixel manipulation
 - Support for custom MNIST-compatible models
+- Allows for custom conversion and output functions to allow for increased compatability with different model types.
 
 ## Installation
 
@@ -87,13 +87,15 @@ app = NumberCreatorWindow(root, model=model, blur=0.15)  # Adjust blur intensity
 ### NumberCreatorWindow
 
 ```python
-NumberCreatorWindow(root, model, blur=0.1)
+NumberCreatorWindow(root, model, blur=0.1, conversion_function, output_function)
 ```
 
 Parameters:
 - `root`: Tkinter root window
 - `model`: TensorFlow model for digit prediction
 - `blur`: Blur intensity for drawing (default: 0.1)
+- `conversion_function`: Function receiving a 28×28 NumPy array and returning data in the shape/format the model accepts
+- `output function`: Function receiving the model’s raw output (e.g. probability array) and returning a tuple of (prediction int, confidence float)
 
 ### Methods
 
