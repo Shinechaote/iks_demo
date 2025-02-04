@@ -1,14 +1,26 @@
 import numpy as np
 import tensorflow as tf
 
-def predict(model, data):
+def predict(model, data, conversion_function, output_function):
     if model is None:
         print("Model is not loaded")
         return 0, 0
-    x = np.array(data).reshape(1, 784)
+    
+    x = np.array()
+
+    # If no conversion function is provided, assume the data is to be reshaped to (1, 784)
+    if conversion_function is None:
+        x = np.array(data).reshape(1, 784)
+    else:
+        x = conversion_function(data)
 
     prediction = model.predict(x)
-    return np.argmax(prediction), prediction[0][np.argmax(prediction)]
+
+    # If no output function is provided, revert to default where the output is the index of the highest value
+    if conversion_function is None:
+        return np.argmax(prediction), prediction[0][np.argmax(prediction)]
+    
+    return output_function(prediction)
 
 def drawGridLines(canvas):
     for i in range(29):

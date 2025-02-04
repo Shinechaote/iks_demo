@@ -8,7 +8,13 @@ from . import utils as utils
 
 class NumberCreatorWindow:
 
-    def __init__(self, root, model, blur=0.1):
+    # root: Tkinter root window
+    # model: Trained model
+    # blur: Amount of blur to add to the drawing
+    # conversion_function: Function to convert the numpy array created by the Tkinter window to the format expected by the model
+    # output_function: Function to convert the output of the model to a human-readable format
+
+    def __init__(self, root, model, blur=0.1, conversion_function=None, ouptut_function=None):
         self.root = root
         self.root.title("MNIST Drawing App")
 
@@ -87,10 +93,7 @@ class NumberCreatorWindow:
                         self.grid_data, self.canvas,
                         y, x, bx1, bx2, by1, by2,
                         self.blur
-                    )
-                
-
-                
+                    )            
     
     def start_removing(self, event):
         self.removing = True
@@ -121,7 +124,7 @@ class NumberCreatorWindow:
 
 
     def predict(self):
-        prediction, confidence = utils.predict(self.model, self.grid_data)
+        prediction, confidence = utils.predict(self.model, self.grid_data, self.conversion_function, self.ouptut_function)
         self.prediction_label.config(text=f"Prediction: {prediction} Confidence: {confidence:.2f}")
         self.root.update()
 
