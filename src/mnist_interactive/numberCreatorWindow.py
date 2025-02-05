@@ -28,6 +28,9 @@ class NumberCreatorWindow:
         self._create_widgets()
         self._create_canvas()
 
+        self.conversion_function = conversion_function
+        self.ouptut_function = ouptut_function
+
         self.model = model
         self.predict()
     

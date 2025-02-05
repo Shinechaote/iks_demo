@@ -6,7 +6,7 @@ def predict(model, data, conversion_function, output_function):
         print("Model is not loaded")
         return 0, 0
     
-    x = np.array()
+    x = None
 
     # If no conversion function is provided, assume the data is to be reshaped to (1, 784)
     if conversion_function is None:
