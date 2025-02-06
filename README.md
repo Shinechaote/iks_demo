@@ -11,7 +11,12 @@ An interactive tool for experimenting with MNIST handwriting recognition models 
 - Grid overlay for precise pixel manipulation
 - Support for custom MNIST-compatible models
 - Allows for custom conversion and output functions to allow for increased compatability with different model types.
-
+- 'currently under development' Tkinter window will show visualisation of how your model works under the surface - illustrating the following features:
+	- Activation functionfor each layer
+	- number of nodes in each layer
+	- time required to execute the model
+	- further down the line, this functionality will be enabled with convolutional neural networks and other model types
+  
 ## Installation
 
 1. Clone the repository:
@@ -35,7 +40,7 @@ pip install tensorflow
 - Python >= 3.8
 - TensorFlow >= 2.0
 - NumPy
-- Tkinter (usually comes with Python)
+- Tkinter
 
 ## Usage
 
