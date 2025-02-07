@@ -1,12 +1,16 @@
 import numpy as np
 import tensorflow as tf
+import tkinter as tk
+import tkinter.ttk as ttk
+import math
+
 
 def predict(model, data, conversion_function, output_function):
     if model is None:
         print("Model is not loaded")
         return 0, 0
     
-    x = np.array()
+    x = None
 
     # If no conversion function is provided, assume the data is to be reshaped to (1, 784)
     if conversion_function is None:
@@ -40,3 +44,42 @@ def addBlur(grid_data, canvas, grid_y, grid_x, x_1, x_2, y_1, y_2, blur):
         outline="grey"
     )
     return grid_data
+
+
+def display_model_internals(model, root):
+    FRAME_WIDTH = 1000
+    FRAME_HEIGHT = 500
+    
+    layer_spacing = 40
+    neuron_spacing = 3
+    radius = 3
+
+    MAX_NEURONS = math.floor(FRAME_WIDTH / neuron_spacing)-4
+
+    print("Displaying model internals...")
+
+    # Create a frame to hold the canvas
+    frame = tk.Frame(root, width=FRAME_WIDTH, height=FRAME_HEIGHT)
+    frame.grid(row=0, column=1, sticky="nsew")
+    frame.pack_propagate(False)  # Prevent resizing
+
+    # Create a canvas for drawing neurons
+    canvas = tk.Canvas(frame, width=FRAME_WIDTH, height=FRAME_HEIGHT, bg="white")
+    canvas.pack(fill="both", expand=True)
+
+
+    for layer_number, layer in enumerate([layer for layer in model.layers if isinstance(layer, tf.keras.layers.Dense)]):
+            y = layer_spacing * layer_number + 50
+            for neuron_number in range(MAX_NEURONS if layer.units > MAX_NEURONS else layer.units):
+                x = neuron_spacing * neuron_number - ((MAX_NEURONS if layer.units > MAX_NEURONS else layer.units) * neuron_spacing / 2) + (FRAME_WIDTH / 2)
+                print(f"Drawing neuron at ({x}, {y})")
+                canvas.create_oval(
+                    x-radius, 
+                    y-radius, 
+                    x+radius, 
+                    y+radius, 
+                    fill="blue"
+                )
+            
+
+    canvas.update_idletasks()  # Ensure the canvas updates
