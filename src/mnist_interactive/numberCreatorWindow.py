@@ -32,6 +32,7 @@ class NumberCreatorWindow:
         self.ouptut_function = ouptut_function
 
         self.model = model
+        utils.display_model_internals(model, self.root)
         self.predict()
     
     def _create_widgets(self):
@@ -39,14 +40,14 @@ class NumberCreatorWindow:
         self.main_frame.grid(row=0, column=0, sticky=(tk.N, tk.S, tk.E, tk.W))
 
         self.clear_button = ttk.Button(self.main_frame, text="Clear", command=self.clear_canvas)
-        self.clear_button.grid(row=0, column=0, sticky=(tk.W, tk.E))
+        self.clear_button.grid(row=1, column=0, sticky=(tk.W, tk.E, tk.S), pady=10)
 
         self.prediction_label = ttk.Label(self.main_frame, text="Prediction: ")
-        self.prediction_label.grid(row=0, column=2, padx=5, pady=5)
+        self.prediction_label.grid(row=1, column=2, padx=5, pady=10, sticky=(tk.S))
 
     def _create_canvas(self):
-        self.canvas = tk.Canvas(self.root, width=280, height=280, bg="black")
-        self.canvas.grid(row=1, column=0, columnspan=3, padx=5, pady=5)
+        self.canvas = tk.Canvas(self.main_frame, width=280, height=280, bg="black")
+        self.canvas.grid(row=0, column=0, columnspan=3, padx=5, pady=5, sticky=(tk.N, tk.S, tk.E, tk.W))
 
         self.canvas.bind('<Button-1>', self.start_drawing)
         self.canvas.bind('<B1-Motion>', self.draw)
@@ -55,8 +56,8 @@ class NumberCreatorWindow:
         self.canvas.bind('<B2-Motion>', self.remove)
         self.canvas.bind('<ButtonRelease-1>', self.stop_removing)
 
-
         utils.drawGridLines(self.canvas)
+
         
     def start_drawing(self, event):
         self.drawing = True
