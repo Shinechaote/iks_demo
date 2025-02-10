@@ -2,7 +2,7 @@ import tensorflow as tf
 import numpy as np
 import tkinter as tk
 from tkinter import ttk
-from . import utils as utils
+import utils as utils
 
 
 

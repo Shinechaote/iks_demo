@@ -41,11 +41,12 @@ class MNISTDataLoader(object):
         plt.imshow(images[sampleNumber], cmap="gray")
         plt.show()
 
-trainingLoader = MNISTDataLoader("SampleDataset/Train/train-images-idx3-ubyte", "SampleDataset/Train/train-labels-idx1-ubyte")
-trainingLoader.readData()
-testLoader = MNISTDataLoader("SampleDataset/Test/t10k-images-idx3-ubyte", "SampleDataset/Test/t10k-labels-idx1-ubyte")
-testLoader.readData()
-trainingLoader.VisualiseSample(7231)
+if __name__ == "__main__":
+    trainingLoader = MNISTDataLoader("SampleDataset/Train/train-images-idx3-ubyte", "SampleDataset/Train/train-labels-idx1-ubyte")
+    trainingLoader.readData()
+    testLoader = MNISTDataLoader("SampleDataset/Test/t10k-images-idx3-ubyte", "SampleDataset/Test/t10k-labels-idx1-ubyte")
+    testLoader.readData()
+    trainingLoader.VisualiseSample(7231)
 
 
 
