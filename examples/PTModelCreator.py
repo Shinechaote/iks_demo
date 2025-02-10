@@ -53,7 +53,7 @@ if __name__ == "__main__":
 
     train_dataset = datasets.MNIST(root="./../SampleDataset/Train", train=True, transform=transform, download=True)
     test_dataset = datasets.MNIST(root="./../SampleDataset/Test", train=False, transform=transform, download=True)
-
+    print(type(train_dataset))
     train_loader = data.DataLoader(train_dataset, batch_size=64, shuffle=True)
     test_loader = data.DataLoader(test_dataset, batch_size=64, shuffle=False)
 
