@@ -42,5 +42,3 @@ model.fit(train_data, train_labels, epochs=4, batch_size=32, validation_data=(va
 # Evaluate the model
 print(f"Loss, Accuracy = {model.evaluate(testLoader.data, testLoader.labels)}")
 model.save("sampleModel.keras")
-
-print(model.predict(testLoader.data[0].reshape(1, 784)))
