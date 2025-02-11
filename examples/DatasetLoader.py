@@ -46,6 +46,7 @@ if __name__ == "__main__":
     trainingLoader.readData()
     testLoader = MNISTDataLoader("SampleDataset/Test/t10k-images-idx3-ubyte", "SampleDataset/Test/t10k-labels-idx1-ubyte")
     testLoader.readData()
+    print(trainingLoader.data[0].flatten())
     trainingLoader.VisualiseSample(7231)
 
 

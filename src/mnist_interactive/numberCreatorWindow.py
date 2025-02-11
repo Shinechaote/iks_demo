@@ -2,7 +2,7 @@ import tensorflow as tf
 import numpy as np
 import tkinter as tk
 from tkinter import ttk
-from . import utils as utils
+import utils as utils
 
 
 
@@ -32,7 +32,7 @@ class NumberCreatorWindow:
         self.ouptut_function = ouptut_function
 
         self.model = model
-        utils.display_model_internals(model, self.root)
+        utils.display_model_internals(model, self.root, self.grid_data)
         self.predict()
     
     def _create_widgets(self):
@@ -66,6 +66,7 @@ class NumberCreatorWindow:
     def stop_drawing(self, event):
         self.drawing = False
         self.predict()
+        utils.display_model_internals(self.model, self.root, self.grid_data)
     
     def draw(self, event):
         if self.drawing:
@@ -106,6 +107,7 @@ class NumberCreatorWindow:
     def stop_removing(self, event):
         self.removing = False
         self.predict()
+        utils.display_model_internals(self.model, self.root, self.grid_data)
 
     def remove(self, event): 
         if self.removing:

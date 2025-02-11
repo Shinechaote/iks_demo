@@ -60,13 +60,13 @@ def allLayerOutputs(model, data): # in the future this function will include a c
     
     return output_function(prediction)
 
-def display_model_internals(model, root):
-    FRAME_WIDTH = 1000
-    FRAME_HEIGHT = 500
+def display_model_internals(model, root, data):
+    FRAME_WIDTH = 750
+    FRAME_HEIGHT = 300
     
-    layer_spacing = 40
-    neuron_spacing = 3
-    radius = 3
+    layer_spacing = FRAME_HEIGHT / len([layer for layer in model.layers if isinstance(layer, tf.keras.layers.Dense)])
+    neuron_spacing = 10
+    radius = 4
 
     MAX_NEURONS = math.floor(FRAME_WIDTH / neuron_spacing)-4
 
@@ -78,22 +78,42 @@ def display_model_internals(model, root):
     frame.pack_propagate(False)  # Prevent resizing
 
     # Create a canvas for drawing neurons
-    canvas = tk.Canvas(frame, width=FRAME_WIDTH, height=FRAME_HEIGHT, bg="white")
+    canvas = tk.Canvas(frame, width=FRAME_WIDTH, height=FRAME_HEIGHT, bg="grey")
     canvas.pack(fill="both", expand=True)
-
+    
+    activations = gen_activations(model, data.flatten())
 
     for layer_number, layer in enumerate([layer for layer in model.layers if isinstance(layer, tf.keras.layers.Dense)]):
             y = layer_spacing * layer_number + 50
+            act_max = np.max(activations[layer_number])
+            act_min = np.min(activations[layer_number])
             for neuron_number in range(MAX_NEURONS if layer.units > MAX_NEURONS else layer.units):
                 x = neuron_spacing * neuron_number - ((MAX_NEURONS if layer.units > MAX_NEURONS else layer.units) * neuron_spacing / 2) + (FRAME_WIDTH / 2)
-                print(f"Drawing neuron at ({x}, {y})")
+                colour_num = (activations[layer_number][0][neuron_number] - act_min) / (act_max - act_min) * 255
+                if colour_num < 0:
+                    colour_num = 0
+                if colour_num > 255 or math.isnan(colour_num):
+                    colour_num = 255
+                
                 canvas.create_oval(
                     x-radius, 
                     y-radius, 
                     x+radius, 
                     y+radius, 
-                    fill="blue"
+                    fill="#"+f"{int(colour_num):02X}"*3
                 )
+
             
 
     canvas.update_idletasks()  # Ensure the canvas updates
+
+# this function is used to convert data and a model into a list of outputs for each neuron in the model.
+def gen_activations(model, input_data):
+    input_data = input_data.reshape(1, 784)
+    # reduce to only dense layers   
+    dense_layers = [layer for layer in model.layers if isinstance(layer, tf.keras.layers.Dense)]
+    
+    # this is different from how models have been previously defined as the output is specified to be all dense layers
+    model = tf.keras.Model(inputs=model.inputs, outputs=[layer.output for layer in dense_layers])
+
+    return model.predict(input_data)
