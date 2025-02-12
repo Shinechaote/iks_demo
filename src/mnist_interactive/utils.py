@@ -60,7 +60,7 @@ def allLayerOutputs(model, data): # in the future this function will include a c
     
     return output_function(prediction)
 
-def display_model_internals(model, root, data):
+def display_model_internals(model, root, data, activation_model):
     FRAME_WIDTH = 750
     FRAME_HEIGHT = 300
     
@@ -70,8 +70,6 @@ def display_model_internals(model, root, data):
 
     MAX_NEURONS = math.floor(FRAME_WIDTH / neuron_spacing)-4
 
-    print("Displaying model internals...")
-
     # Create a frame to hold the canvas
     frame = tk.Frame(root, width=FRAME_WIDTH, height=FRAME_HEIGHT)
     frame.grid(row=0, column=1, sticky="nsew")
@@ -80,14 +78,15 @@ def display_model_internals(model, root, data):
     # Create a canvas for drawing neurons
     canvas = tk.Canvas(frame, width=FRAME_WIDTH, height=FRAME_HEIGHT, bg="grey")
     canvas.pack(fill="both", expand=True)
-    
-    activations = gen_activations(model, data.flatten())
+
+    activations = gen_activations(activation_model, data)
 
     for layer_number, layer in enumerate([layer for layer in model.layers if isinstance(layer, tf.keras.layers.Dense)]):
             y = layer_spacing * layer_number + 50
             act_max = np.max(activations[layer_number])
             act_min = np.min(activations[layer_number])
             for neuron_number in range(MAX_NEURONS if layer.units > MAX_NEURONS else layer.units):
+                act_max = max(act_max-act_min, 1e-10)
                 x = neuron_spacing * neuron_number - ((MAX_NEURONS if layer.units > MAX_NEURONS else layer.units) * neuron_spacing / 2) + (FRAME_WIDTH / 2)
                 colour_num = (activations[layer_number][0][neuron_number] - act_min) / (act_max - act_min) * 255
                 if colour_num < 0:
@@ -110,10 +109,9 @@ def display_model_internals(model, root, data):
 # this function is used to convert data and a model into a list of outputs for each neuron in the model.
 def gen_activations(model, input_data):
     input_data = input_data.reshape(1, 784)
-    # reduce to only dense layers   
-    dense_layers = [layer for layer in model.layers if isinstance(layer, tf.keras.layers.Dense)]
-    
-    # this is different from how models have been previously defined as the output is specified to be all dense layers
-    model = tf.keras.Model(inputs=model.inputs, outputs=[layer.output for layer in dense_layers])
-
     return model.predict(input_data)
+
+# creates the model which outputs the desired layer activations
+def create_activations_model(model):
+    dense_layers = [layer for layer in model.layers if isinstance(layer, tf.keras.layers.Dense)]
+    return tf.keras.Model(inputs=model.inputs, outputs=[layer.output for layer in dense_layers])
