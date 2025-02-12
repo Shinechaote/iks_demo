@@ -22,14 +22,16 @@ model = Sequential ([
     Dropout(0.2),
     tf.keras.layers.Dense(64, activation="relu"),
     Dropout(0.2),
+    tf.keras.layers.Dense(64, activation="relu"),
+    Dropout(0.2),
     tf.keras.layers.Dense(10, activation="softmax")
 ], name="test")
 
 optimizer = Adam(learning_rate=0.01, clipnorm=1.0)
 model.compile(optimizer=optimizer, loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
-# split training and validation datasets
-train_data, val_data, train_labels, val_labels =  model.evaluate(testLoader.data, testLoader.labels)(trainingLoader.data, trainingLoader.labels, test_size=0.1, random_state=42)
+# Split the training data into training and validation data
+train_data, val_data, train_labels, val_labels = train_test_split(trainingLoader.data, trainingLoader.labels, test_size=0.1, random_state=42)
 
 # Early stopping to prevent overfitting
 early_stopping = EarlyStopping(monitor='val_loss', patience=3, restore_best_weights=True)
@@ -39,3 +41,4 @@ model.fit(train_data, train_labels, epochs=4, batch_size=32, validation_data=(va
 
 # Evaluate the model
 print(f"Loss, Accuracy = {model.evaluate(testLoader.data, testLoader.labels)}")
+model.save("sampleModel.keras")

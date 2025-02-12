@@ -10,13 +10,15 @@ An interactive tool for experimenting with MNIST handwriting recognition models 
 - Clear canvas functionality
 - Grid overlay for precise pixel manipulation
 - Support for custom MNIST-compatible models
+- Allows for custom conversion and output functions to allow for increased compatability with different model types
+- Display neuron activation values in Tkinter window given the drawing grid values
 - Allows for custom conversion and output functions to allow for increased compatability with different model types.
-- 'currently under development' Tkinter window will show visualisation of how your model works under the surface - illustrating the following features:
-	- Activation functionfor each layer
-	- number of nodes in each layer
-	- time required to execute the model
+- Tkinter window will show visualisation of how your model works under the surface - illustrating the following features:
+  - The value of each Neuron activation in your model
+	- Activation function for each layer `under development`
+	- number of nodes in each layer  `under development`
+	- time required to execute the model `under development`
 	- further down the line, this functionality will be enabled with convolutional neural networks and other model types
-  
 ## Installation
 
 1. Clone the repository:
