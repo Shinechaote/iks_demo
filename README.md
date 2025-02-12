@@ -10,7 +10,8 @@ An interactive tool for experimenting with MNIST handwriting recognition models 
 - Clear canvas functionality
 - Grid overlay for precise pixel manipulation
 - Support for custom MNIST-compatible models
-- Allows for custom conversion and output functions to allow for increased compatability with different model types.
+- Allows for custom conversion and output functions to allow for increased compatability with different model types
+- Display neuron activation values in Tkinter window given the drawing grid values
 
 ## Installation
 
