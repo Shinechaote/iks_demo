@@ -1,4 +1,4 @@
-import mnist_interactive.numberCreatorWindow as mi
+import mnist_interactive.ui.numberCreatorWindow as mi
 import tensorflow as tf
 import tkinter as tk
 from tkinter import ttk

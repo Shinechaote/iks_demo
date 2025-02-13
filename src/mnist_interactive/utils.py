@@ -1,3 +1,5 @@
+# in the upcoming update, this file will be restructured into multiple files
+
 import numpy as np
 import tensorflow as tf
 import tkinter as tk

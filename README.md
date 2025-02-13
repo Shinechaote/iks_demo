@@ -82,7 +82,26 @@ app = NumberCreatorWindow(root, model=model, blur=0.15)  # Adjust blur intensity
 - `example.py`: Example implementation
 - `requirements.txt`: Required Python packages
 - `setup.py`: Package installation configuration
-
+```
+src/mnist_interactive/
+├── backends/
+│   ├── __init__.py
+│   ├── tensorflow_backend.py
+│   ├── pytorch_backend.py
+│   └── base_backend.py
+├── ui/
+│   ├── __init__.py
+│   ├── number_creator_window.py
+│   ├── canvas.py
+│   └── visualization.py
+├── utils/
+│   ├── __init__.py
+│   ├── grid.py
+│   └── blur.py
+└── examples/
+    ├── tensorflow_example.py
+    └── pytorch_example.py
+```
 ## API Reference
 
 ### NumberCreatorWindow
