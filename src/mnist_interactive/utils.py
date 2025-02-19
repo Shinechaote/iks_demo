@@ -1,3 +1,5 @@
+# in the upcoming update, this file will be restructured into multiple files
+
 import numpy as np
 import tensorflow as tf
 import tkinter as tk
@@ -45,20 +47,20 @@ def addBlur(grid_data, canvas, grid_y, grid_x, x_1, x_2, y_1, y_2, blur):
     )
     return grid_data
 
-def allLayerOutputs(model, data): # in the future this function will include a conversion function and will be compatible with convulutional layers
-    if model is None:
-        print("Model is not loaded")
-        return 0, 0
+
+## RENAMED TO display_layer_outputs IN BASE CLASS
+# def allLayerOutputs(model, data): # in the future this function will include a conversion function and will be compatible with convulutional layers
+#     if model is None:
+#         print("Model is not loaded")
+#         return 0, 0
     
-    x = None
+#     x = None
 
-    x = np.array(data).reshape(1, 784)
+#     x = np.array(data).reshape(1, 784)
 
-    prediction = model.predict(x)
+#     prediction = model.predict(x)
 
-    return np.argmax(prediction), prediction[0][np.argmax(prediction)]
-    
-    return output_function(prediction)
+#     return np.argmax(prediction), prediction[0][np.argmax(prediction)]
 
 def display_model_internals(model, root, data, activation_model):
     FRAME_WIDTH = 750

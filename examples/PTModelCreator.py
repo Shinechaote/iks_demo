@@ -19,7 +19,7 @@ class MLP(nn.Module):
     
     def forward(self, x):
         return self.model(x)
-    
+
 def train_model(model, dataloader, criterion, optimizer, epochs=5):
     model.train()
     for epoch in range(epochs):
@@ -53,7 +53,7 @@ if __name__ == "__main__":
 
     train_dataset = datasets.MNIST(root="./../SampleDataset/Train", train=True, transform=transform, download=True)
     test_dataset = datasets.MNIST(root="./../SampleDataset/Test", train=False, transform=transform, download=True)
-    print(type(train_dataset))
+
     train_loader = data.DataLoader(train_dataset, batch_size=64, shuffle=True)
     test_loader = data.DataLoader(test_dataset, batch_size=64, shuffle=False)
 
@@ -63,4 +63,4 @@ if __name__ == "__main__":
 
     train_model(model, train_loader, criterion, optimizer, epochs=5)
     evaluate_model(model, test_loader)
-    # torch.save(model, "torchMNISTModel.pth")
+    torch.save(model, "torchMNISTModel.pth")

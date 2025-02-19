@@ -12,13 +12,7 @@ An interactive tool for experimenting with MNIST handwriting recognition models 
 - Support for custom MNIST-compatible models
 - Allows for custom conversion and output functions to allow for increased compatability with different model types
 - Display neuron activation values in Tkinter window given the drawing grid values
-- Allows for custom conversion and output functions to allow for increased compatability with different model types.
-- Tkinter window will show visualisation of how your model works under the surface - illustrating the following features:
-  - The value of each Neuron activation in your model
-	- Activation function for each layer `under development`
-	- number of nodes in each layer  `under development`
-	- time required to execute the model `under development`
-	- further down the line, this functionality will be enabled with convolutional neural networks and other model types
+
 ## Installation
 
 1. Clone the repository:
@@ -42,7 +36,7 @@ pip install tensorflow
 - Python >= 3.8
 - TensorFlow >= 2.0
 - NumPy
-- Tkinter
+- Tkinter (usually comes with Python)
 
 ## Usage
 
@@ -88,7 +82,26 @@ app = NumberCreatorWindow(root, model=model, blur=0.15)  # Adjust blur intensity
 - `example.py`: Example implementation
 - `requirements.txt`: Required Python packages
 - `setup.py`: Package installation configuration
-
+```
+src/mnist_interactive/
+├── backends/
+│   ├── __init__.py
+│   ├── tensorflow_backend.py
+│   ├── pytorch_backend.py
+│   └── base_backend.py
+├── ui/
+│   ├── __init__.py
+│   ├── number_creator_window.py
+│   ├── canvas.py
+│   └── visualization.py
+├── utils/
+│   ├── __init__.py
+│   ├── grid.py
+│   └── blur.py
+└── examples/
+    ├── tensorflow_example.py
+    └── pytorch_example.py
+```
 ## API Reference
 
 ### NumberCreatorWindow
