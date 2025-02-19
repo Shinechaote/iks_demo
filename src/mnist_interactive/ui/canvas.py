@@ -86,22 +86,22 @@ class Canvas:
                 self.grid_data[grid_y, grid_x] = 1.0
 
             blur_coords = [
-                (grid_y-1, grid_x, x1, x2, y1-10, y2-10),  # Top
-                (grid_y+1, grid_x, x1, x2, y1+10, y2+10),  # Bottom
-                (grid_y, grid_x-1, x1-10, x2-10, y1, y2),  # Left
-                (grid_y, grid_x+1, x1+10, x2+10, y1, y2),  # Right
-                (grid_y-1, grid_x-1, x1-10, x2-10, y1-10, y2-10),  # Top-Left
-                (grid_y-1, grid_x+1, x1+10, x2+10, y1-10, y2-10),  # Top-Right
-                (grid_y+1, grid_x-1, x1-10, x2-10, y1+10, y2+10),  # Bottom-Left
-                (grid_y+1, grid_x+1, x1+10, x2+10, y1+10, y2+10)   # Bottom-Right
+                (grid_y-1, grid_x, x1, x2, y1-10, y2-10, self.blur),  # Top
+                (grid_y+1, grid_x, x1, x2, y1+10, y2+10, self.blur),  # Bottom
+                (grid_y, grid_x-1, x1-10, x2-10, y1, y2, self.blur),  # Left
+                (grid_y, grid_x+1, x1+10, x2+10, y1, y2, self.blur),  # Right
+                (grid_y-1, grid_x-1, x1-10, x2-10, y1-10, y2-10, self.blur*0.75),  # Top-Left
+                (grid_y-1, grid_x+1, x1+10, x2+10, y1-10, y2-10, self.blur*0.75),  # Top-Right
+                (grid_y+1, grid_x-1, x1-10, x2-10, y1+10, y2+10, self.blur*0.75),  # Bottom-Left
+                (grid_y+1, grid_x+1, x1+10, x2+10, y1+10, y2+10, self.blur*0.75)   # Bottom-Right
             ]
 
-            for y, x, bx1, bx2, by1, by2 in blur_coords:
+            for y, x, bx1, bx2, by1, by2, blur in blur_coords:
                 # add blur
                 self.grid_data = self.visualisation.addBlur(
                     self.grid_data, self.canvas,
                     y, x, bx1, bx2, by1, by2,
-                    self.blur
+                    blur
                 )  
 
     def start_removing(self, event):
