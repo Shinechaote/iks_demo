@@ -1,10 +1,8 @@
-import tkinter as tk
-from ..ui.canvas import Canvas
-from ..backends.tensorflow_backend import TensorFlowBackend
+from ..ui.numberCreatorWindow import NumberCreatorWindow as ncw
 import tensorflow as tf
+import tkinter as tk
 
 root = tk.Tk()
 model = tf.keras.models.load_model("sampleModel.keras")
-MLBackend = TensorFlowBackend(model)
-can = Canvas(root, MLBackend)
+ncw = ncw(root, model)
 root.mainloop()
