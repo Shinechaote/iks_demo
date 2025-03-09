@@ -2,8 +2,6 @@ LICENCE
 README.md
 pyproject.toml
 setup.py
-src/mnist_interactive/__init__.py
-src/mnist_interactive/numberCreatorWindow.py
 src/mnist_interactive/utils.py
 src/mnist_interactive.egg-info/PKG-INFO
 src/mnist_interactive.egg-info/SOURCES.txt
