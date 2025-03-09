@@ -6,7 +6,7 @@ from ..backends.base_backend import BaseBackend
 from .visualisation import visualisation
 
 class Canvas:
-    def __init__(self, root, MLBackend: Type[BaseBackend]):
+    def __init__(self, root, MLBackend: Type[BaseBackend], blur=0.1):
         self.root = root
         self.visualisation = visualisation(MLBackend)
         self.MLBackend = MLBackend
@@ -16,7 +16,7 @@ class Canvas:
         
         self.drawing = False
         self.removing = False
-        self.blur = 0.1
+        self.blur = blur
         
         # the following variables may eventually be moved up stream/into a different file and class.
         self.drawing = False
